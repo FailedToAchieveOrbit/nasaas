@@ -1,0 +1,70 @@
+# NASaaS Default Configuration
+
+# Core engine settings
+engine:
+  max_concurrent_jobs: 3
+  default_algorithm: "darts"
+  job_timeout: 3600  # 1 hour
+  cleanup_completed_jobs: true
+  log_level: "INFO"
+
+# Search algorithm settings
+search:
+  epochs: 50
+  learning_rate: 0.025
+  arch_learning_rate: 3e-4
+  weight_decay: 3e-4
+  batch_size: 64
+  cutout: true
+  cutout_length: 16
+  drop_path_prob: 0.0
+  
+# Dataset and data loading
+datasets:
+  data_dir: "./data"
+  cache_dir: "./cache"
+  download_timeout: 600
+  preprocessing_workers: 4
+  
+# Model Context Protocol settings
+mcp:
+  servers:
+    aws:
+      region: "us-east-1"
+      timeout: 300
+    gcp:
+      region: "us-central1"
+      project_id: null  # Set your project ID
+      timeout: 300
+    azure:
+      region: "eastus"
+      subscription_id: null  # Set your subscription ID
+      resource_group: null   # Set your resource group
+      workspace_name: null   # Set your workspace name
+      timeout: 300
+    local:
+      host: "0.0.0.0"
+      port: 8080
+      workers: 1
+  default_platform: "local"
+  
+# API server settings (for web interface)
+api:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 1
+  cors_origins: ["*"]
+  rate_limit: "100/minute"
+  
+# Monitoring and logging
+monitoring:
+  enabled: true
+  metrics_interval: 60
+  performance_tracking: true
+  
+# Database settings (for persistent storage)
+database:
+  url: "sqlite:///./nasaas.db"
+  pool_size: 5
+  max_overflow: 10
+  echo: false
